@@ -1,0 +1,12 @@
+{
+  "cloudwatch.emitMetrics": true,
+  "kinesis.endpoint": "",
+  "firehose.endpoint": "",
+  
+  "flows": [
+    {
+      "filePattern": "/var/log/cadabra/*log",
+      "deliveryStream": "PurchaseLogs"
+    }
+  ]
+}
