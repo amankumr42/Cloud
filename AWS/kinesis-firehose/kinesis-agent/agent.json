@@ -1,8 +1,8 @@
 {
   "cloudwatch.emitMetrics": true,
   "kinesis.endpoint": "",
-  "firehose.endpoint": "",
-  
+  "firehose.endpoint": "firehose.ap-south-1.amazonaws.com",
+
   "flows": [
     {
       "filePattern": "/var/log/cadabra/*log",
