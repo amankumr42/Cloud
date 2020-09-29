@@ -40,44 +40,8 @@ path_args, pipeline_args = parser.parse_known_args()
 options = PipelineOptions(pipeline_args)
 
 
-'''def run(argv=None, save_main_session=True):
-  """Build and run the pipeline."""
-  parser = argparse.ArgumentParser()
-  parser.add_argument(
-      '--output_path',
-      required=True,
-      help=(
-          'Output path to google cloud storage'))
-  group = parser.add_mutually_exclusive_group(required=True)
-  group.add_argument(
-      '--input_topic',
-      help=(
-          'Input PubSub topic of the form '
-          '"projects/<PROJECT>/topics/<TOPIC>".'))
-  group.add_argument(
-      '--input_subscription',
-      help=(
-          'Input PubSub subscription of the form '
-          '"projects/<PROJECT>/subscriptions/<SUBSCRIPTION>."'))
-  known_args, pipeline_args = parser.parse_known_args(argv)
-
-  # We use the save_main_session option because one or more DoFn's in this
-  # workflow rely on global context (e.g., a module imported at module level).
-  pipeline_options = PipelineOptions(pipeline_args)
-  pipeline_options.view_as(SetupOptions).save_main_session = save_main_session
-  pipeline_options.view_as(StandardOptions).streaming = True'''
-
 with beam.Pipeline(options=options) as p:
-  '''if path_args.input_subscription:
-    message = (
-        p 
-        | beam.io.ReadFromPubSub(subscription=path_args.input_subscription).with_output_types(bytes)
-        )
-  else:
-    message = (
-        p
-        | beam.io.ReadFromPubSub(subscription=path_args.input_topic).with_output_types(bytes)
-    )'''
+
   message = (
         p
         | beam.io.ReadFromPubSub(path_args.input_topic).with_output_types(bytes)
