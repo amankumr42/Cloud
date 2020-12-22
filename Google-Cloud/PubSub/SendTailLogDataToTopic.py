@@ -3,7 +3,7 @@ import os
 from google.cloud import pubsub_v1
 
 # TODO(developer)
-project_id = "my-project-3-150520"
+project_id = "my-project-123"
 topic_id = "sample_topic"
 
 publisher = pubsub_v1.PublisherClient()
