@@ -45,7 +45,8 @@ class ParseApacheServerLog(beam.DoFn):
     SIZE = r'(?P<size>\S+)'
     REGEX = HOST+SPACE+IDENTITY+SPACE+USER+SPACE+TIME+SPACE+REQUEST+SPACE+STATUS+SPACE+SIZE+SPACE
     match = re.search(REGEX, element)
-    return [match.group('host'),match.group('time'),match.group('request') ,match.group('status'),match.group('size')]
+    return ["{host},{time},{request},{status},{size}".format(host =match.group('host'), time = match.group('time'), 
+      request= match.group('request') , status = match.group('status'), size = match.group('size'))]
 
 class ServerLogSchema(typing.NamedTuple):
     host: str
