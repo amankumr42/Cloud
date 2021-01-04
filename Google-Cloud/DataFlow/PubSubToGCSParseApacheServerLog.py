@@ -59,15 +59,15 @@ class ParseApacheServerLog(beam.DoFn):
     SIZE = r'(?P<size>\S+)'
     REGEX = HOST+SPACE+IDENTITY+SPACE+USER+SPACE+TIME+SPACE+REQUEST+SPACE+STATUS+SPACE+SIZE+SPACE
     match = re.search(REGEX, str(element))
-    return{
+    '''yield {
         "host": match.group('host'),
         "time": match.group('time'),
         "request" : match.group('request'),
         "status": match.group('status'),
-        "size" : match.group('time')
-    }
-    '''return "{host},{time},{request},{status},{size}".format(host =match.group('host'), time = match.group('time'), 
-      request= match.group('request') , status = match.group('status'), size = match.group('size'))'''
+        "size" : match.group('size')
+    }'''
+    yield "{host},{time},{request},{status},{size}".format(host =match.group('host'), time = match.group('time'), 
+      request= match.group('request') , status = match.group('status'), size = match.group('size'))
 
 class WriteBatchesToGCS(beam.DoFn):
     def __init__(self, output_path):
@@ -83,7 +83,7 @@ class WriteBatchesToGCS(beam.DoFn):
 
         with beam.io.gcp.gcsio.GcsIO().open(filename=filename, mode="w") as f:
             for element in batch:
-                f.write("{}\n".format(json.dumps(element)).encode("utf-8"))
+                f.write("{data}".format(data=element).encode("utf-8"))
 
 def run (input_topic, output_path, window_size=1.0, pipeline_args=None):
   pipeline_options = PipelineOptions(
